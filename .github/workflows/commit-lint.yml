@@ -31,7 +31,9 @@ jobs:
 
       - name: Check for DONTMERGE
         run: |
-          result=$(git ls-files | xargs grep -Hn 'DONTMERGE' -- 2>/dev/null || true)
+          result=$(git ls-files \
+            | grep -v '.github/workflows/commit-lint.yml' \
+            | xargs grep -Hn 'DONT''MERGE' -- 2>/dev/null || true)
           if [[ ! -z "$result" ]]; then
             echo "$result"
             exit 1
