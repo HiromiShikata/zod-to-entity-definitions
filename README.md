@@ -336,11 +336,13 @@ This project uses GitHub Actions for continuous integration and deployment.
 ### Workflows
 
 1. **Commit Message Validation** (`.github/workflows/commit-check.yml`)
+
    - Runs on all PRs
    - Validates commit messages using [Conventional Commits](https://www.conventionalcommits.org/)
    - Ensures all commits are linear (no merge commits)
 
 2. **Lint and Test** (`.github/workflows/lint-test.yml`)
+
    - Runs on all PRs and pushes to main
    - Executes linting, type checking, and tests
    - Must pass before merging
@@ -359,6 +361,7 @@ This project uses GitHub Actions for continuous integration and deployment.
 Publishing is automated via GitHub Actions. To publish a new version:
 
 1. **Required tokens**: No additional tokens needed!
+
    - The workflow uses the built-in `GITHUB_TOKEN` which is automatically provided by GitHub Actions
    - The `GITHUB_TOKEN` has the necessary permissions to:
      - Write to the repository (create tags, update files)
@@ -367,6 +370,7 @@ Publishing is automated via GitHub Actions. To publish a new version:
    - **No manual token configuration required** - it works out of the box
 
 2. **Trigger the publish workflow**:
+
    - Go to the Actions tab in GitHub
    - Select "Publish to GitHub Packages" workflow
    - Click "Run workflow" on the main branch
