@@ -20,20 +20,18 @@ jobs:
       contents: read
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Use Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
       - name: Check for DONTMERGE
         run: |
-          result=$(find . \
-            -type f \
-            ! -path './.github/workflows/commit-lint.yml' \
-            ! -name '*.snap' \
-            -exec grep -Hn 'DONTMERGE' {} \;)
+          result=$(git ls-files | xargs grep -Hn 'DONTMERGE' -- 2>/dev/null || true)
           if [[ ! -z "$result" ]]; then
             echo "$result"
             exit 1
@@ -44,9 +42,8 @@ jobs:
         with:
           exclude-branches: 'release/**, dependabot/**, project-common/**'
           loose-matching: true
-      - name: Install commitlint
-        run: |
-          npm install --save-dev @commitlint/{config-conventional,cli}
+      - name: Install dependencies
+        run: npm ci
       - name: Lint commits
         run: |
-          npx commitlint --from=origin/main --to=HEAD --config ./.github/workflows/configs/commitlint.config.js
+          npx commitlint --from=origin/main --to=HEAD --config ./commitlint.config.mjs

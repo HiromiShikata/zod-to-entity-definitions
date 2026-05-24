@@ -18,7 +18,7 @@ jobs:
           private-key: ${{ secrets.HS_BOT_GH_AP_PRIVATE_KEY }}
 
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set branch name as output
         id: branch_name
@@ -39,7 +39,7 @@ jobs:
         with:
           github_token: ${{ steps.app-token.outputs.token }}
           destination_branch: 'main'
-          source_branch: ''
+          source_branch: '${{ steps.branch_name.outputs.branch }}'
           pr_title: '${{ steps.branch_name.outputs.branch }}'
           pr_body: |
             :magic_wand: :sparkles:

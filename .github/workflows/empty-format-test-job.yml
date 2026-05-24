@@ -1,6 +1,13 @@
 name: Empty format test
 
-on: push
+on:
+  push:
+    branches-ignore:
+      - main
+
+concurrency:
+  group: format-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -9,17 +16,17 @@ jobs:
       - run: echo "test"
 
   format:
+    if: github.actor != 'github-actions[bot]' && github.actor != 'umino-bot'
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_TOKEN }}
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v4
         with:
-          node-version: 24
-      - run: git pull
+          node-version: 20
       - run: |
           npx prettier --write "**/*.{md,yaml,yml,js}" --trailing-comma all --print-width 80 --single-quote true
           git --no-pager diff

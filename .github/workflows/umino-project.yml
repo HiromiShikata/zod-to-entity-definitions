@@ -15,9 +15,7 @@ on:
       - assigned
       - unassigned
       - labeled
-      - opened
       - edited
-      - reopened
       - synchronize
   issue_comment:
     types:
@@ -36,6 +34,7 @@ env:
   project_id: 48
   project_v2_id: PVT_kwHOAGJHa84AFWnr
   field_id: PVTF_lAHOAGJHa84AFWnrzgIk_H0
+  status_field_id: PVTSSF_lAHOAGJHa84AFWnrzgDFcxE
   team_repo: '7sea.world, blog-tech, media-pinpoint-research, instagram-beauty-aesthetics-review, umino-corporait-operation, instagram-14LBaggageTraveler, hashigoya-project'
 
 jobs:
@@ -49,7 +48,7 @@ jobs:
         with:
           app-id: ${{ secrets.HS_BOT_GH_AP_APP_ID }}
           private-key: ${{ secrets.HS_BOT_GH_AP_PRIVATE_KEY }}
-          owner: HiromiShikata
+          owner: ${{ github.repository_owner }}
       - name: Move issue to ${{ env.unread }}
         run: |
           RESOURCE_NODE_ID="${{ github.event.pull_request.node_id || github.event.issue.node_id }}"
@@ -78,10 +77,10 @@ jobs:
             -f query='mutation($projectId:ID!,$itemId:ID!,$fieldId:ID!,$optionId:String!){updateProjectV2ItemFieldValue(input:{projectId:$projectId,itemId:$itemId,fieldId:$fieldId,value:{singleSelectOptionId:$optionId}}){projectV2Item{id}}}' \
             -f projectId="$PROJECT_V2_ID" \
             -f itemId="$ITEM_ID" \
-            -f fieldId="PVTSSF_lAHOAGJHa84AFWnrzgDFcxE" \
+            -f fieldId="${{ env.status_field_id }}" \
             -f optionId="f75ad846"
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         if: >-
           (github.event_name == 'issues' && github.event.issue.state == 'open') ||
           (github.event_name == 'pull_request' && github.event.pull_request.state == 'open') &&
@@ -94,7 +93,7 @@ jobs:
           NUMBER=$(echo ${{ github.event_name }} | grep -q "pull_request" && echo ${{ github.event.pull_request.number }} || echo ${{ github.event.issue.number }})
 
           QUERY_DATA='{ "query": "query { repository(owner: \"'$OWNER'\", name: \"'$REPO'\") { '${ENTITY_TYPE}'(number: '$NUMBER') { projectItems(first: 10) { nodes { id } } } } }" }'
-          RESPONSE=$(curl -X POST -H "Authorization: bearer ${{ secrets.GH_TOKEN }}" -H "Content-Type: application/json" --data "$QUERY_DATA" https://api.github.com/graphql)
+          RESPONSE=$(curl -X POST -H "Authorization: bearer ${{ steps.app-token.outputs.token }}" -H "Content-Type: application/json" --data "$QUERY_DATA" https://api.github.com/graphql)
 
           if echo $RESPONSE | grep -q "errors"; then
             echo "Error in GraphQL query"
@@ -116,7 +115,7 @@ jobs:
           CLEAR_FIELD_DATA="{\"query\":\"mutation { clearProjectV2ItemFieldValue(input: {projectId: \\\"${{ env.project_v2_id }}\\\", fieldId: \\\"${{ env.field_id }}\\\", itemId: \\\"$ITEM_ID\\\"}) { clientMutationId }}\"}"
           CLEAR_RESPONSE=$(curl --request POST \
             --url https://api.github.com/graphql \
-            --header "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
+            --header "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
             --header "Content-Type: application/json" \
             --data "$CLEAR_FIELD_DATA")
 
@@ -253,7 +252,7 @@ jobs:
         with:
           app-id: ${{ secrets.HS_BOT_GH_AP_APP_ID }}
           private-key: ${{ secrets.HS_BOT_GH_AP_PRIVATE_KEY }}
-          owner: HiromiShikata
+          owner: ${{ github.repository_owner }}
       - uses: nearform-actions/github-action-check-linked-issues@v1
         id: check-linked-issues
         if: github.event.pull_request.user.login != 'dependabot[bot]'
