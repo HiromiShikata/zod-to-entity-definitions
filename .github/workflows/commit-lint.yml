@@ -38,12 +38,6 @@ jobs:
             echo "$result"
             exit 1
           fi
-      - uses: nearform-actions/github-action-check-linked-issues@v1
-        id: check-linked-issues
-        if: false
-        with:
-          exclude-branches: 'release/**, dependabot/**, project-common/**'
-          loose-matching: true
       - name: Install dependencies
         run: npm ci
       - name: Lint commits

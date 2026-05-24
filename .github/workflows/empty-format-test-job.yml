@@ -23,12 +23,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ github.token }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
       - run: |
-          npx prettier --write "**/*.{md,yaml,yml,js}" --trailing-comma all --print-width 80 --single-quote true
+          npx prettier@3.5.3 --write "**/*.{md,yaml,yml,js}" --trailing-comma all --print-width 80 --single-quote true
           git --no-pager diff
       - uses: stefanzweifel/git-auto-commit-action@v7
         with:
