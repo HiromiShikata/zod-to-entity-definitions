@@ -35,6 +35,7 @@ npx tsx examples/generate-example-json.ts
 ```
 
 This will generate:
+
 - `entity-definitions.json` - Complete entity definitions with all properties
 - `entity-relations.json` - Relationship mappings between entities
 
@@ -47,6 +48,7 @@ Generated output showing the complete entity definitions. Each entity includes:
 - **properties**: Array of property definitions
 
 Property types include:
+
 - `PrimaryKey`: Primary key fields
 - Primitives: `string`, `number`, `boolean`, `Date`
 - `typedStruct`: Embedded struct types

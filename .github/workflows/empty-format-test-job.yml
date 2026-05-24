@@ -1,0 +1,35 @@
+name: Empty format test
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+concurrency:
+  group: format-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "test"
+
+  format:
+    if: github.actor != 'github-actions[bot]' && github.actor != 'umino-bot'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ github.token }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: |
+          npx prettier@3.5.3 --write "**/*.{md,yaml,yml,js}" --trailing-comma all --print-width 80 --single-quote true
+          git --no-pager diff
+      - uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: 'style: re-format / npx prettier --write "**/*.{md,yaml,yml,js}"'

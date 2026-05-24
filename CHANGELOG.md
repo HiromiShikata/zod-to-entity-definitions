@@ -2,39 +2,39 @@
 
 ### Bug Fixes
 
-* regenerate package-lock.json to include all platform-specific biome binaries ([#31](https://github.com/masaori/zod-to-entity-definitions/issues/31)) ([a6a6f38](https://github.com/masaori/zod-to-entity-definitions/commit/a6a6f38e032e403ac444a552d2f1a84c1a560ab3))
-* support ref metadata on wrapped schemas for order independence ([6e4c0cd](https://github.com/masaori/zod-to-entity-definitions/commit/6e4c0cdcb367a6c3a85ec329c55f1ed8303f5a6f))
+- regenerate package-lock.json to include all platform-specific biome binaries ([#31](https://github.com/masaori/zod-to-entity-definitions/issues/31)) ([a6a6f38](https://github.com/masaori/zod-to-entity-definitions/commit/a6a6f38e032e403ac444a552d2f1a84c1a560ab3))
+- support ref metadata on wrapped schemas for order independence ([6e4c0cd](https://github.com/masaori/zod-to-entity-definitions/commit/6e4c0cdcb367a6c3a85ec329c55f1ed8303f5a6f))
 
 ## [1.1.9](https://github.com/masaori/zod-to-entity-definitions/compare/v1.1.8...v1.1.9) (2026-01-03)
 
 ### Bug Fixes
 
-* change zod version 4.x -> 3.25.x ([c7adfda](https://github.com/masaori/zod-to-entity-definitions/commit/c7adfda1dd6683ebd20aa077ae5bd18aa01fd525))
+- change zod version 4.x -> 3.25.x ([c7adfda](https://github.com/masaori/zod-to-entity-definitions/commit/c7adfda1dd6683ebd20aa077ae5bd18aa01fd525))
 
 ## [1.1.8](https://github.com/masaori/zod-to-entity-definitions/compare/v1.1.7...v1.1.8) (2025-12-01)
 
 ### Bug Fixes
 
-* add npm token and issues permission to publish workflow ([ef9c777](https://github.com/masaori/zod-to-entity-definitions/commit/ef9c777a66879ac32ff8e0867384c0fea0b960ba))
-* bump version ([c97b4c5](https://github.com/masaori/zod-to-entity-definitions/commit/c97b4c53bfd623c158098dee5243917696e55a52))
+- add npm token and issues permission to publish workflow ([ef9c777](https://github.com/masaori/zod-to-entity-definitions/commit/ef9c777a66879ac32ff8e0867384c0fea0b960ba))
+- bump version ([c97b4c5](https://github.com/masaori/zod-to-entity-definitions/commit/c97b4c53bfd623c158098dee5243917696e55a52))
 
 ## [1.1.7](https://github.com/masaori/zod-to-entity-definitions/compare/v1.1.6...v1.1.7) (2025-11-27)
 
 ### Bug Fixes
 
-* bump version ([82db54c](https://github.com/masaori/zod-to-entity-definitions/commit/82db54c200dd68a3c1f278e690b732718f2f8135))
+- bump version ([82db54c](https://github.com/masaori/zod-to-entity-definitions/commit/82db54c200dd68a3c1f278e690b732718f2f8135))
 
 ## [1.1.6](https://github.com/masaori/zod-to-entity-definitions/compare/v1.1.5...v1.1.6) (2025-11-27)
 
 ### Bug Fixes
 
-* bump version ([1fcff03](https://github.com/masaori/zod-to-entity-definitions/commit/1fcff035d984e54851f2a8dd95f290049616a3bc))
+- bump version ([1fcff03](https://github.com/masaori/zod-to-entity-definitions/commit/1fcff035d984e54851f2a8dd95f290049616a3bc))
 
 ## [1.1.5](https://github.com/masaori/zod-to-entity-definitions/compare/v1.1.4...v1.1.5) (2025-11-26)
 
 ### Bug Fixes
 
-* bump version ([e24e205](https://github.com/masaori/zod-to-entity-definitions/commit/e24e2054c87751fd78386ca0dbc7f155b864249e))
+- bump version ([e24e205](https://github.com/masaori/zod-to-entity-definitions/commit/e24e2054c87751fd78386ca0dbc7f155b864249e))
 
 ## [1.1.4](https://github.com/masaori/zod-to-entity-definitions/compare/v1.1.3...v1.1.4) (2025-11-26)
 
@@ -44,36 +44,36 @@
 
 ### Bug Fixes
 
-* update zod usage for v4 compatibility ([236cc10](https://github.com/masaori/zod-to-entity-definitions/commit/236cc1007a53103ba8bb8a24319fbef48a588462))
+- update zod usage for v4 compatibility ([236cc10](https://github.com/masaori/zod-to-entity-definitions/commit/236cc1007a53103ba8bb8a24319fbef48a588462))
 
 ## [1.1.1](https://github.com/masaori/zod-to-entity-definitions/compare/v1.1.0...v1.1.1) (2025-11-23)
 
 ### Bug Fixes
 
-* ignore package.json from lint check ([9ab9062](https://github.com/masaori/zod-to-entity-definitions/commit/9ab90624ed81759ed16270e53c2e4c7ce840ba3e))
+- ignore package.json from lint check ([9ab9062](https://github.com/masaori/zod-to-entity-definitions/commit/9ab90624ed81759ed16270e53c2e4c7ce840ba3e))
 
 ## [1.1.0](https://github.com/masaori/zod-to-entity-definitions/compare/v1.0.3...v1.1.0) (2025-11-23)
 
 ### Features
 
-* improve generateEntities return type to infer entity names ([5e3d07d](https://github.com/masaori/zod-to-entity-definitions/commit/5e3d07d2b24701fe1bd8a9736399aea04de35a0d))
+- improve generateEntities return type to infer entity names ([5e3d07d](https://github.com/masaori/zod-to-entity-definitions/commit/5e3d07d2b24701fe1bd8a9736399aea04de35a0d))
 
 ### Bug Fixes
 
-* remove unnecessary file ([2dadc2b](https://github.com/masaori/zod-to-entity-definitions/commit/2dadc2b733e75a1f94b5487e4949d6f7c2ac7e22))
+- remove unnecessary file ([2dadc2b](https://github.com/masaori/zod-to-entity-definitions/commit/2dadc2b733e75a1f94b5487e4949d6f7c2ac7e22))
 
 ## [1.0.3](https://github.com/masaori/zod-to-entity-definitions/compare/v1.0.2...v1.0.3) (2025-11-23)
 
 ### Bug Fixes
 
-* remove prettier ([e488223](https://github.com/masaori/zod-to-entity-definitions/commit/e488223ec79300f05be9935a07506d38f0d80841))
+- remove prettier ([e488223](https://github.com/masaori/zod-to-entity-definitions/commit/e488223ec79300f05be9935a07506d38f0d80841))
 
 ## [1.0.2](https://github.com/masaori/zod-to-entity-definitions/compare/v1.0.1...v1.0.2) (2025-11-23)
 
 ### Bug Fixes
 
-* lint ([dce8fe0](https://github.com/masaori/zod-to-entity-definitions/commit/dce8fe0c332da4ace76e208c8265cdc6db589f7b))
-* run lint ([08be8e6](https://github.com/masaori/zod-to-entity-definitions/commit/08be8e6a4c19a5f0a85b74a0ecaf168af1a837ef))
+- lint ([dce8fe0](https://github.com/masaori/zod-to-entity-definitions/commit/dce8fe0c332da4ace76e208c8265cdc6db589f7b))
+- run lint ([08be8e6](https://github.com/masaori/zod-to-entity-definitions/commit/08be8e6a4c19a5f0a85b74a0ecaf168af1a837ef))
 
 ## [1.0.1](https://github.com/masaori/zod-to-entity-definitions/compare/v1.0.0...v1.0.1) (2025-11-23)
 

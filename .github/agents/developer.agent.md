@@ -96,15 +96,18 @@ All commit messages must follow the [Conventional Commits](https://www.conventio
 ### Common Commitlint Errors to Avoid
 
 1. **Missing type prefix**: `✖ type may not be empty [type-empty]`
+
    - ❌ `Fix package.json formatting`
    - ✅ `fix: package.json formatting`
 
 2. **Subject case violation**: `✖ subject must not be sentence-case, start-case, pascal-case, upper-case [subject-case]`
+
    - ❌ `fix: Fix package.json formatting`
    - ✅ `fix: package.json formatting`
    - Subject must be lowercase, not capitalized
 
 3. **Body line too long**: `✖ body's lines must not be longer than 100 characters`
+
    - Keep body lines under 100 characters
    - Break long lines into multiple shorter lines
 
