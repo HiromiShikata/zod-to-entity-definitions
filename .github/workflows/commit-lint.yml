@@ -1,3 +1,8 @@
+# DO NOT EDIT DIRECTLY.
+# This file is auto-synchronized from HiromiShikata/repositories-management.
+# Direct edits in downstream repositories will be overwritten by the next sync.
+# Update the source file in HiromiShikata/repositories-management instead.
+
 name: Lint Commit Messages
 on:
   pull_request:
@@ -19,27 +24,37 @@ jobs:
       pull-requests: write
       contents: read
     steps:
+      - uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+        uses: actions/setup-node@v6
 
       - name: Check for DONTMERGE
         run: |
-          result=$(git ls-files \
-            | grep -v '.github/workflows/commit-lint.yml' \
-            | xargs grep -Hn 'DONT''MERGE' -- 2>/dev/null || true)
+          result=$(find . \
+            -type f \
+            ! -path './.github/workflows/commit-lint.yml' \
+            ! -name '*.snap' \
+            -exec grep -Hn 'DONTMERGE' {} \;)
           if [[ ! -z "$result" ]]; then
             echo "$result"
             exit 1
           fi
-      - name: Install dependencies
-        run: npm ci
+      - uses: nearform-actions/github-action-check-linked-issues@v1
+        id: check-linked-issues
+        if: false
+        with:
+          exclude-branches: 'release/**, dependabot/**, project-common/**'
+          loose-matching: true
+      - name: Install commitlint
+        run: |
+          npm install --save-dev @commitlint/{config-conventional,cli}
       - name: Lint commits
         run: |
-          npx commitlint --from=origin/main --to=HEAD --config ./commitlint.config.mjs
+          npx commitlint --from=origin/main --to=HEAD --config ./.github/workflows/configs/commitlint.config.js

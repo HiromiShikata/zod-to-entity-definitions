@@ -1,3 +1,8 @@
+# DO NOT EDIT DIRECTLY.
+# This file is auto-synchronized from HiromiShikata/repositories-management.
+# Direct edits in downstream repositories will be overwritten by the next sync.
+# Update the source file in HiromiShikata/repositories-management instead.
+
 name: Create PR
 
 on:
@@ -10,15 +15,18 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]'
     steps:
+      - uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
       - name: Generate hs-bot-gh-ap installation token
         id: app-token
         uses: actions/create-github-app-token@v3
         with:
-          app-id: ${{ secrets.HS_BOT_GH_AP_APP_ID }}
+          client-id: ${{ secrets.HS_BOT_GH_AP_CLIENT_ID }}
           private-key: ${{ secrets.HS_BOT_GH_AP_PRIVATE_KEY }}
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set branch name as output
         id: branch_name
@@ -35,11 +43,11 @@ jobs:
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.existing_pr == ''
-        uses: repo-sync/pull-request@v2
+        uses: repo-sync/pull-request@7e79a9f5dc3ad0ce53138f01df2fad14a04831c5
         with:
           github_token: ${{ steps.app-token.outputs.token }}
           destination_branch: 'main'
-          source_branch: '${{ steps.branch_name.outputs.branch }}'
+          source_branch: ''
           pr_title: '${{ steps.branch_name.outputs.branch }}'
           pr_body: |
             :magic_wand: :sparkles:
