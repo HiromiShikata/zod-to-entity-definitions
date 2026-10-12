@@ -16,8 +16,8 @@ describe('weekly dependency maintenance update version pins', () => {
       expect(pkg.devDependencies?.['@semantic-release/npm']).toBe('13.2.0');
     });
 
-    it('devDependencies["@types/node"] is pinned to 22.20.5', () => {
-      expect(pkg.devDependencies?.['@types/node']).toBe('22.20.5');
+    it('devDependencies["@types/node"] is pinned to 26.6.5', () => {
+      expect(pkg.devDependencies?.['@types/node']).toBe('26.6.5');
     });
 
     it('devDependencies["tsx"] is pinned to 4.23.15', () => {
