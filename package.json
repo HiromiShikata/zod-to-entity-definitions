@@ -46,22 +46,22 @@
     "access": "public"
   },
   "peerDependencies": {
-    "zod": "3.25.76"
+    "zod": "4.6.5"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@commitlint/cli": "^19.0.0",
-    "@commitlint/config-conventional": "^19.0.0",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/npm": "^13.1.5",
-    "@types/node": "^22.10.1",
-    "conventional-changelog-conventionalcommits": "^8.0.0",
-    "semantic-release": "^25.0.5",
+    "@commitlint/cli": "21.2.3",
+    "@commitlint/config-conventional": "21.2.3",
+    "@semantic-release/changelog": "7.0.0",
+    "@semantic-release/git": "11.0.1",
+    "@semantic-release/npm": "13.2.0",
+    "@types/node": "22.20.5",
+    "conventional-changelog-conventionalcommits": "10.4.1",
+    "semantic-release": "25.0.9",
     "tsup": "^8.3.5",
-    "tsx": "^4.20.6",
+    "tsx": "4.23.15",
     "typescript": "^5.7.2",
-    "vitest": "^5.0.0",
-    "zod": "^3.25.76"
+    "vitest": "5.0.3",
+    "zod": "4.6.5"
   }
 }
