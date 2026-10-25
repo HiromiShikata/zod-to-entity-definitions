@@ -74,6 +74,12 @@ const vulnerablePackages: VulnerablePackage[] = [
     patchedVersion: '1.2.2',
     lockfilesCovered: ['pnpm-lock.yaml'],
   },
+  {
+    packageName: 'http-cache-semantics',
+    vulnerableFrom: '0.0.0',
+    patchedVersion: '4.3.0',
+    lockfilesCovered: ['package-lock.json'],
+  },
 ];
 
 const packageNamesInBothLockfiles = ['handlebars', 'undici'];
