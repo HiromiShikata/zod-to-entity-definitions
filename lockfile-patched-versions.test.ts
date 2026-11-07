@@ -9,11 +9,13 @@ type VulnerablePackage = {
   vulnerableFrom: string;
   patchedVersion: string;
   lockfilesCovered: LockfileName[];
+  exemptPackageLockPaths?: string[];
 };
 
 type ResolvedPackageInstance = {
   packageName: string;
   version: string;
+  lockfilePath?: string;
 };
 
 type PackageLockEntry = {
@@ -35,7 +37,26 @@ const vulnerablePackages: VulnerablePackage[] = [
   {
     packageName: 'undici',
     vulnerableFrom: '7.0.0',
-    patchedVersion: '7.29.1',
+    patchedVersion: '7.30.1',
+    lockfilesCovered: ['package-lock.json', 'pnpm-lock.yaml'],
+  },
+  {
+    packageName: 'undici',
+    vulnerableFrom: '4.0.0',
+    patchedVersion: '6.29.1',
+    lockfilesCovered: ['package-lock.json', 'pnpm-lock.yaml'],
+    exemptPackageLockPaths: ['node_modules/npm/node_modules/undici'],
+  },
+  {
+    packageName: 'vite',
+    vulnerableFrom: '8.3.0',
+    patchedVersion: '8.3.3',
+    lockfilesCovered: ['package-lock.json', 'pnpm-lock.yaml'],
+  },
+  {
+    packageName: 'vite',
+    vulnerableFrom: '8.2.0',
+    patchedVersion: '8.2.4',
     lockfilesCovered: ['package-lock.json', 'pnpm-lock.yaml'],
   },
   {
@@ -82,7 +103,7 @@ const vulnerablePackages: VulnerablePackage[] = [
   },
 ];
 
-const packageNamesInBothLockfiles = ['handlebars', 'undici'];
+const packageNamesInBothLockfiles = ['handlebars', 'undici', 'vite'];
 
 const readLockfile = (lockfileName: LockfileName): string =>
   readFileSync(resolve(__dirname, lockfileName), 'utf-8');
@@ -115,7 +136,13 @@ const parsePackageLockInstances = (lockfileText: string): ResolvedPackageInstanc
       return [];
     }
     const packageNameFromPath = pathMatch[1] ?? '';
-    return [{ packageName: entry.name ?? packageNameFromPath, version: entry.version }];
+    return [
+      {
+        packageName: entry.name ?? packageNameFromPath,
+        version: entry.version,
+        lockfilePath: packagePath,
+      },
+    ];
   });
 };
 
@@ -163,8 +190,14 @@ const findOffenders = (
   vulnerablePackage: VulnerablePackage,
   instances: ResolvedPackageInstance[]
 ): string[] => {
+  const exemptPaths =
+    lockfileName === 'package-lock.json' ? (vulnerablePackage.exemptPackageLockPaths ?? []) : [];
   const offendingVersions = instances
     .filter((instance) => instance.packageName === vulnerablePackage.packageName)
+    .filter(
+      (instance) =>
+        instance.lockfilePath === undefined || !exemptPaths.includes(instance.lockfilePath)
+    )
     .filter((instance) => isOffendingVersion(vulnerablePackage, instance.version))
     .map((instance) => instance.version);
   return [...new Set(offendingVersions)].map(
@@ -183,7 +216,7 @@ const findPackageNamesWithoutInstances = (
 
 describe('lockfiles resolve patched versions of vulnerable packages', () => {
   describe('package-lock.json', () => {
-    it('parses resolved instances of handlebars and undici', () => {
+    it('parses resolved instances of handlebars, undici and vite', () => {
       const instances = parsePackageLockInstances(readLockfile('package-lock.json'));
 
       expect(findPackageNamesWithoutInstances(packageNamesInBothLockfiles, instances)).toEqual([]);
@@ -205,7 +238,7 @@ describe('lockfiles resolve patched versions of vulnerable packages', () => {
   });
 
   describe('pnpm-lock.yaml', () => {
-    it('parses resolved instances of handlebars and undici', () => {
+    it('parses resolved instances of handlebars, undici and vite', () => {
       const instances = parsePnpmLockInstances(readLockfile('pnpm-lock.yaml'));
 
       expect(findPackageNamesWithoutInstances(packageNamesInBothLockfiles, instances)).toEqual([]);
