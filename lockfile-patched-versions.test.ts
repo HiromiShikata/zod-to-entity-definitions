@@ -9,13 +9,11 @@ type VulnerablePackage = {
   vulnerableFrom: string;
   patchedVersion: string;
   lockfilesCovered: LockfileName[];
-  exemptPackageLockPaths?: string[];
 };
 
 type ResolvedPackageInstance = {
   packageName: string;
   version: string;
-  lockfilePath?: string;
 };
 
 type PackageLockEntry = {
@@ -45,7 +43,6 @@ const vulnerablePackages: VulnerablePackage[] = [
     vulnerableFrom: '4.0.0',
     patchedVersion: '6.29.1',
     lockfilesCovered: ['package-lock.json', 'pnpm-lock.yaml'],
-    exemptPackageLockPaths: ['node_modules/npm/node_modules/undici'],
   },
   {
     packageName: 'vite',
@@ -140,7 +137,6 @@ const parsePackageLockInstances = (lockfileText: string): ResolvedPackageInstanc
       {
         packageName: entry.name ?? packageNameFromPath,
         version: entry.version,
-        lockfilePath: packagePath,
       },
     ];
   });
@@ -190,14 +186,8 @@ const findOffenders = (
   vulnerablePackage: VulnerablePackage,
   instances: ResolvedPackageInstance[]
 ): string[] => {
-  const exemptPaths =
-    lockfileName === 'package-lock.json' ? (vulnerablePackage.exemptPackageLockPaths ?? []) : [];
   const offendingVersions = instances
     .filter((instance) => instance.packageName === vulnerablePackage.packageName)
-    .filter(
-      (instance) =>
-        instance.lockfilePath === undefined || !exemptPaths.includes(instance.lockfilePath)
-    )
     .filter((instance) => isOffendingVersion(vulnerablePackage, instance.version))
     .map((instance) => instance.version);
   return [...new Set(offendingVersions)].map(
