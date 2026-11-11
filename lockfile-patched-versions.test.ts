@@ -14,7 +14,6 @@ type VulnerablePackage = {
 type ResolvedPackageInstance = {
   packageName: string;
   version: string;
-  lockfilePath?: string;
 };
 
 type PackageLockEntry = {
@@ -138,7 +137,6 @@ const parsePackageLockInstances = (lockfileText: string): ResolvedPackageInstanc
       {
         packageName: entry.name ?? packageNameFromPath,
         version: entry.version,
-        lockfilePath: packagePath,
       },
     ];
   });
